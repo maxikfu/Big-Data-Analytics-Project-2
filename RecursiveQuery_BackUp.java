@@ -1,12 +1,12 @@
 import java.util.*;
 
 
-public class RecursiveQuery{
+public class RecursiveQuery_BackUp{
   private String initialTable;
   private String finalTable;
   private String intermidiateTablesBase;
   private Integer depth=0;
-  public RecursiveQuery(String initialTableName, String finalTableName,
+  public RecursiveQuery_BackUp(String initialTableName, String finalTableName,
                 String intermidiateTablesBaseName, Integer d, QueryMethods obj){
     initialTable = initialTableName;
     finalTable = finalTableName;
@@ -15,7 +15,6 @@ public class RecursiveQuery{
     obj.executeQuery("DELETE FROM "+finalTable+";");
   }
   public void semiNaiveRecursion(QueryMethods object, String sourcevertexCondition){
-    long start = System.currentTimeMillis();
     //creating temp E table. Exact copy of initial table with data
     String query = "CREATE TABLE E AS SELECT *, 1 AS p FROM "+initialTable+";";
     object.executeDropQuery("E","TABLE");
@@ -30,8 +29,8 @@ public class RecursiveQuery{
     }
 
     createTableR1 = "CREATE TABLE "+intermidiateTablesBase+
-                    "1 AS SELECT 1 AS d, i AS i, j AS j, p AS p, v AS v, E.i as Edge,0 as LW "
-                     + " FROM E " +sourcevertexCondition + " ORDER BY i,j,v";
+                    "1 AS SELECT 1 AS d, i AS i, j AS j, p AS p, v AS v, E.i as R1Edge "
+                    + additionalColumns + " FROM E " +sourcevertexCondition + " ORDER BY i,j,v";
     object.executeDropQuery(intermidiateTablesBase+"1", "TABLE");
     object.executeQuery(createTableR1);
 
@@ -55,7 +54,7 @@ public class RecursiveQuery{
                 + " AS SELECT "+ d + " AS d, " + oldTableName
                 + ".i AS i, E.j AS j, " + oldTableName
                 + ".p*E.p AS p," + "" + oldTableName + ".v+E.v AS v, "
-                + "E.i as Edge, E.v as LW"
+                +prevEdges + "E.i as "+newTableName+"Edge"+additionalColumns
                 + " FROM " + oldTableName
                 + " JOIN E ON " + oldTableName + ".j=E.i WHERE "
                 + oldTableName + ".i!=" + oldTableName + ".j ";
@@ -65,8 +64,6 @@ public class RecursiveQuery{
       object.executeDropQuery(newTableName, "TABLE");
       object.executeQuery(recursiveTableQuery);
       String countQuery = "SELECT COUNT(*) FROM " + newTableName;
-      //recursiveTableQuery = "INSERT INTO Paths SELECT "+String.valueOf(d-1)+" as number, d ,i,Edge,j FROM "+newTableName+";";
-      //object.executeQuery(recursiveTableQuery);
       //System.out.println("In table "+newTableName+ " was added " + object.executeStopQuery(countQuery)+" rows");
       if (object.executeStopQuery(countQuery) == 0) {
         break;
@@ -75,18 +72,16 @@ public class RecursiveQuery{
     }
 
 
-    String createQuery = "INSERT INTO  "+finalTable+" SELECT  * FROM "+intermidiateTablesBase+"1";
+    String createQuery = "INSERT INTO "+finalTable+" SELECT * FROM "+intermidiateTablesBase+"1";
     for(int i=2;i<d;i++) {
       createQuery=createQuery+" UNION ALL SELECT * FROM "+intermidiateTablesBase+String.valueOf(i);
     }
 
 
-  //object.executeDropQuery(finalTable,"TABLE");
+    //object.executeDropQuery(finalTable,"TABLE");
     object.executeQuery(createQuery);
     String rcountquery="SELECT COUNT(*) FROM "+finalTable;
     System.out.println("Number of rows in R table: "+object.executeStopQuery(rcountquery));
-    long elapsedTime = System.currentTimeMillis() - start;
-    System.out.println(elapsedTime/1000F);
-    object.deleteIntermediateTables(d,intermidiateTablesBase);
+    //object.deleteIntermediateTables(d,intermidiateTablesBase);
   }
 }

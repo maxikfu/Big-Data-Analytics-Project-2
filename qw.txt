@@ -1,0 +1,41 @@
+select distinct R4.*, R3.Edge, R2.Edge,R1.i from R4
+left join R3 on R4.Edge=R3.j
+left join R2 on R3.Edge=R2.j
+left join R1 on R2.Edge=R1.j
+where R4.i=1 and R4.j = 5 and R1.i=1;
+
+
+select distinct R3.*, R2.Edge, R1.i from R3
+left join R2 on R3.Edge=R2.j
+left join R1 on R2.Edge=R1.j
+where R3.i=1 and R3.j = 5 and R1.i=1;
+
+
+select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge, R1.Edge from EQU
+left join (select * from EQU where d= 1) as R1 on EQU.Edge=R1.j
+where EQU.d=2 and EQU.i = 1 and EQU.j = 5 and R1.i=1;
+
+
+
+select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R3.Edge, R2.Edge,R1.Edge from EQU
+left join (select * from EQU where d= 3) as R3 on EQU.Edge=R3.j and EQU.i=R3.i
+left join (select * from EQU where d= 2) as R2 on R3.Edge=R2.j and R3.i=R2.i
+left join (select * from EQU where d= 1) as R1 on R2.Edge=R1.j and R2.i=R1.i
+where EQU.d=4 and EQU.i = 1 and EQU.j = 5;
+
+
+
+select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R3.Edge, R2.Edge,R1.Edge from EQU
+left join (select * from EQU where d= 3 and i=1) as R3 on EQU.Edge=R3.j and R3.v=(EQU.v-EQU.LW)
+left join (select * from EQU where d= 2 and i=1) as R2 on R3.Edge=R2.j and R2.v=(EQU.v-EQU.LW-R3.LW)
+left join (select * from EQU where d=1 and i=1) as R1 on R2.Edge=R1.j and R1.v=(EQU.v-EQU.LW-R3.LW-R2.LW)
+where  EQU.i = 1 and EQU.j = 5 and EQU.d=4;
+
+select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R2.Edge,R1.Edge from EQU
+left join (select * from EQU where d= 2 and i=1) as R2 on EQU.Edge=R2.j and R2.v=(EQU.v-EQU.LW)
+left join (select * from EQU where d=1 and i=1) as R1 on R2.Edge=R1.j and R1.v=(EQU.v-EQU.LW-R2.LW)
+where EQU.i = 1 and EQU.j = 5 and EQU.d=3;
+
+select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R1.Edge from EQU
+left join (select * from EQU where d=1 and i=1) as R1 on EQU.Edge=R1.j and R1.v=(EQU.v-EQU.LW)
+where EQU.i = 1 and EQU.j = 5 and EQU.d=2;
