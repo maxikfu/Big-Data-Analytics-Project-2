@@ -48,8 +48,8 @@ public class QueryMethods{
   public int executeStopQuery(String query) {
     try {
       Statement statement = connection.createStatement();
-      sqlLogFile.println(query);
-      sqlLogFile.println();
+      //sqlLogFile.println(query);
+      //sqlLogFile.println();
       ResultSet rs = statement.executeQuery(query);
       rs.next();
       return rs.getInt(1);
@@ -66,8 +66,8 @@ public class QueryMethods{
   public void executeQuery(String query) {
     try {
       Statement statement = connection.createStatement();
-      sqlLogFile.println(query);
-      sqlLogFile.println();
+      //sqlLogFile.println(query);
+      //sqlLogFile.println();
       statement.executeUpdate(query);
 
     } catch (Exception e) {
@@ -81,8 +81,8 @@ public class QueryMethods{
     try {
       Statement statement = connection.createStatement();
       String dropIfExistsQuery = "DROP "+type+" IF EXISTS " + tableName+" CASCADE";
-      sqlLogFile.println(dropIfExistsQuery);
-      sqlLogFile.println();
+      //sqlLogFile.println(dropIfExistsQuery);
+      //sqlLogFile.println();
       statement.executeUpdate(dropIfExistsQuery);
 
     } catch (Exception e) {
@@ -97,8 +97,8 @@ public class QueryMethods{
     ArrayList<String> output = new ArrayList<String>();
     try {
       Statement statement = connection.createStatement();
-      sqlLogFile.println(query);
-      sqlLogFile.println();
+      //sqlLogFile.println(query);
+      //sqlLogFile.println();
       ResultSet rs = statement.executeQuery(query);
       int x = 1;
       while(rs.next()){

@@ -1,0 +1,17 @@
+Connected
+Iteration= 1
+Number of rows in EQU table: 15
+Time for Iteration= 0.635
+Iteration= 2
+Number of rows in EQU table: 20
+Time for Iteration= 0.61
+Iteration= 3
+Number of rows in EQU table: 30
+Time for Iteration= 0.603
+Iteration= 4
+Number of rows in EQU table: 38
+Time for Iteration= 0.589
+Iteration= 5
+Number of rows in EQU table: 48
+Time for Iteration= 0.713
+Total time = 3.945

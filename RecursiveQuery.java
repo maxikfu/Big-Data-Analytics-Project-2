@@ -84,9 +84,9 @@ public class RecursiveQuery{
   //object.executeDropQuery(finalTable,"TABLE");
     object.executeQuery(createQuery);
     String rcountquery="SELECT COUNT(*) FROM "+finalTable;
-    System.out.println("Number of rows in R table: "+object.executeStopQuery(rcountquery));
+    System.out.println("Number of rows in EQU table: "+object.executeStopQuery(rcountquery));
     long elapsedTime = System.currentTimeMillis() - start;
-    System.out.println(elapsedTime/1000F);
+    System.out.println("Time for Iteration= "+elapsedTime/1000F);
     object.deleteIntermediateTables(d,intermidiateTablesBase);
   }
 }

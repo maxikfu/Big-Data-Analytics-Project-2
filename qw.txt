@@ -25,16 +25,18 @@ where EQU.d=4 and EQU.i = 1 and EQU.j = 5;
 
 
 
-select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R3.Edge, R2.Edge,R1.Edge from EQU
+select distinct EQU.d,EQU.i, R2.Edge as e2 ,R3.Edge as e3,EQU.Edge as e4, EQU.j,EQU.p,EQU.v from EQU
 left join (select * from EQU where d= 3 and i=1) as R3 on EQU.Edge=R3.j and R3.v=(EQU.v-EQU.LW)
 left join (select * from EQU where d= 2 and i=1) as R2 on R3.Edge=R2.j and R2.v=(EQU.v-EQU.LW-R3.LW)
 left join (select * from EQU where d=1 and i=1) as R1 on R2.Edge=R1.j and R1.v=(EQU.v-EQU.LW-R3.LW-R2.LW)
 where  EQU.i = 1 and EQU.j = 5 and EQU.d=4;
 
+
 select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R2.Edge,R1.Edge from EQU
 left join (select * from EQU where d= 2 and i=1) as R2 on EQU.Edge=R2.j and R2.v=(EQU.v-EQU.LW)
 left join (select * from EQU where d=1 and i=1) as R1 on R2.Edge=R1.j and R1.v=(EQU.v-EQU.LW-R2.LW)
 where EQU.i = 1 and EQU.j = 5 and EQU.d=3;
+
 
 select distinct EQU.d,EQU.i,EQU.j,EQU.p,EQU.v,EQU.Edge,R1.Edge from EQU
 left join (select * from EQU where d=1 and i=1) as R1 on EQU.Edge=R1.j and R1.v=(EQU.v-EQU.LW)
