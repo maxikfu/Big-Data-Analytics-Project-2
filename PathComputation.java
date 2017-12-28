@@ -4,10 +4,10 @@ import java.io.*;
 
 public class PathComputation {
   private static String ip = "127.0.0.1";
-  private static String dbname = "graph";
-  private static String username = "dbadmin";
-  private static String password = "1804";
-  public static String iniTable = "small_graph";
+  private static String dbname = "graphdb";
+  private static String username = "maksim";
+  private static String password = "maksim";
+  public static String iniTable = "facebook_graph";
   public static String finalTable = "EQU";
   public static String baseName = "R";
   public static Integer recursionDepth = 4;
